@@ -1,6 +1,7 @@
 import RatingStars from "./RatingStar"
 
-function ProductCard({ product }) {const { name, price, rating, reviews, inStock, category, image } = product;
+function ProductCard({ product }) {
+    const { name, price, rating, reviews, inStock, category, image } = product;
     
     function handleAddToCart() {
     if (inStock) { alert(`Added "${name}" to cart! Price: $${price.toFixed(2)}`); }
