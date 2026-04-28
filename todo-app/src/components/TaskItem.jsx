@@ -2,18 +2,22 @@ import { useState } from "react";
 
 function TaskItem({ task, onToggle, onDelete, onEdit }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [editText, setEditText] = useState(task.text);
+  const [editText, setEditText] = useState("");
 
   function handleSave() {
-    if (editText.trim()) {
-      onEdit(task.id, editText.trim());
-      setIsEditing(false);
-    }
+    const textToSave = editText.trim() || task.text;
+    onEdit(task.id, textToSave);
+    setIsEditing(false);
   }
 
   function handleCancel() {
     setEditText(task.text);
     setIsEditing(false);
+  }
+
+  function startEditing() {
+    setEditText(task.text);
+    setIsEditing(true);
   }
 
   function handleKeyDown(e) {
@@ -48,7 +52,7 @@ function TaskItem({ task, onToggle, onDelete, onEdit }) {
         <span>{task.text}</span>
       </label>
       <div className="task-actions">
-        <button onClick={() => setIsEditing(true)} className="edit-btn">Edit</button>
+        <button onClick={startEditing} className="edit-btn">Edit</button>
         <button onClick={() => onDelete(task.id)} className="delete-btn">✕</button>
       </div>
     </li>

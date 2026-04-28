@@ -1,30 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import TaskInput from './components/TaskInput';
 import TaskItem from './components/TaskItem';
 import './App.css';
-
-const STORAGE_KEY = 'todo-tasks';
-
-function App() {
-const [tasks, setTasks] = useState(() => {
-  const saved = localStorage.getItem(STORAGE_KEY);
-  return saved ? JSON.parse(saved) : [
-    { id: 1, text: 'Complete React Session 3', completed: true },
-    { id: 2, text: 'Read React docs', completed: false },
-    { id: 3, text: 'Read React documentation', completed: false },
-  ];
-});
-const [filter, setFilter] = useState('all');
+const initialTasks = [
+{ id: 1, text: 'Complete React Session 3', completed: true },
+{ id: 2, text: 'Read React docs', completed: false },
+{ id: 3, text: 'Read React documentation', completed: false },
+];
 let nextId = 4;
-
-useEffect(() => {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
-}, [tasks]);
-
+function App() {
+const [tasks, setTasks] = useState(initialTasks);
+const [filter, setFilter] = useState('all');
 function handleAddTask(text) {
-  setTasks([...tasks, { id: nextId++, text, completed: false }]);
+setTasks([...tasks, { id: nextId++, text, completed: false }]);
 }
-
 function handleToggle(id) {
   setTasks(tasks.map(t => t.id===id ? {...t, completed:!t.completed} : t));
 }
